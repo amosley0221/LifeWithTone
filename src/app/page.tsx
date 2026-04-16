@@ -1,10 +1,14 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { CATEGORIES, SITE_NAME } from "@/lib/constants";
+import { SITE_NAME } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
+  const settings = await prisma.siteSettings.findUnique({
+    where: { id: "singleton" },
+  });
+
   const recentPosts = await prisma.post.findMany({
     where: { published: true },
     orderBy: { createdAt: "desc" },
@@ -25,34 +29,40 @@ export default async function HomePage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
-      {/* Hero */}
-      <section className="text-center mb-16">
-        <h1 className="text-5xl sm:text-6xl font-bold tracking-tight text-text-primary mb-4">
-          {SITE_NAME}
-        </h1>
-        <p className="text-lg text-text-secondary max-w-xl mx-auto">
-          Stories, thoughts, and moments from my world &mdash; technology,
-          music, travel, and everything in between.
-        </p>
-      </section>
-
-      {/* Category grid */}
+      {/* About section */}
       <section className="mb-16">
-        <h2 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-6">
-          Explore
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {CATEGORIES.map((cat) => (
-            <Link
-              key={cat.slug}
-              href={`/category/${cat.slug}`}
-              className="group px-4 py-3 bg-bg-card border border-border rounded-lg text-center transition-all hover:border-accent/50 hover:bg-bg-tertiary"
-            >
-              <span className="text-sm font-medium text-text-secondary group-hover:text-accent transition-colors">
-                {cat.name}
-              </span>
-            </Link>
-          ))}
+        <div className="flex flex-col sm:flex-row items-center gap-8">
+          {/* Profile image */}
+          {settings?.profileImage ? (
+            <div className="shrink-0 w-36 h-36 rounded-full overflow-hidden border-2 border-border">
+              <img
+                src={settings.profileImage}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          ) : (
+            <div className="shrink-0 w-36 h-36 rounded-full bg-bg-card border-2 border-border flex items-center justify-center">
+              <span className="text-4xl text-text-muted">T</span>
+            </div>
+          )}
+
+          {/* Name and bio */}
+          <div className="text-center sm:text-left">
+            <h1 className="text-4xl sm:text-5xl font-bold tracking-tight text-text-primary mb-3">
+              {SITE_NAME}
+            </h1>
+            {settings?.bio ? (
+              <p className="text-text-secondary leading-relaxed max-w-lg whitespace-pre-wrap">
+                {settings.bio}
+              </p>
+            ) : (
+              <p className="text-text-muted max-w-lg">
+                Stories, thoughts, and moments from my world &mdash; technology,
+                music, travel, and everything in between.
+              </p>
+            )}
+          </div>
         </div>
       </section>
 

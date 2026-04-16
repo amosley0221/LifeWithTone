@@ -22,6 +22,13 @@ async function main() {
     });
   }
   console.log("Seeded categories:", categories.map((c) => c.name).join(", "));
+
+  await prisma.siteSettings.upsert({
+    where: { id: "singleton" },
+    update: {},
+    create: { id: "singleton", bio: "", profileImage: null },
+  });
+  console.log("Seeded site settings.");
 }
 
 main()

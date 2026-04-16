@@ -47,3 +47,9 @@ model Like {
 
   @@unique([fingerprint, postId])
 }
+
+model SiteSettings {
+  id           String  @id @default("singleton")
+  bio          String  @default("")
+  profileImage String?
+}
