@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #111111;
+  --color-bg-tertiary: #1a1a1a;
+  --color-bg-card: #141414;
+  --color-text-primary: #e5e5e5;
+  --color-text-secondary: #a3a3a3;
+  --color-text-muted: #666666;
+  --color-accent: #3b82f6;
+  --color-accent-hover: #60a5fa;
+  --color-border: #262626;
+  --color-border-light: #333333;
+  --color-danger: #ef4444;
+  --color-success: #22c55e;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Custom plus-sign cursor */
+*, *::before, *::after {
+  cursor: url('/cursors/plus-default.svg') 16 16, crosshair;
+}
+
+a, button, [role="button"], input[type="submit"],
+label, select, summary, [tabindex]:not([tabindex="-1"]),
+.cursor-pointer {
+  cursor: url('/cursors/plus-pointer.svg') 16 16, pointer !important;
+}
+
+input[type="text"], input[type="email"], input[type="password"],
+input[type="search"], input[type="url"], textarea {
+  cursor: url('/cursors/plus-default.svg') 16 16, text !important;
+}
+
+body {
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-light);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Selection */
+::selection {
+  background: var(--color-accent);
+  color: white;
+}
