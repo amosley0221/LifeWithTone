@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: lifewithtone
+    runtime: node
+    plan: starter
+    buildCommand: npm install && npm run render:build
+    startCommand: npm run render:start
+    envVars:
+      - key: DATABASE_URL
+        value: file:/var/data/lifewithtone.db
+      - key: NEXTAUTH_SECRET
+        generateValue: true
+      - key: NEXTAUTH_URL
+        sync: false
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: PORT
+        value: 3000
+      - key: HOSTNAME
+        value: 0.0.0.0
+      - key: UPLOAD_DIR
+        value: /var/data/uploads
+    disk:
+      name: lifewithtone-data
+      mountPath: /var/data
+      sizeGB: 1

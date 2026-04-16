@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "npx tsx prisma/seed.ts"
+    "seed": "npx tsx prisma/seed.ts",
+    "render:build": "npx prisma generate && npx prisma migrate deploy && npx tsx prisma/seed.ts && next build && cp -r public .next/standalone/public && cp -r .next/static .next/standalone/.next/static",
+    "render:start": "node .next/standalone/server.js"
   },
   "dependencies": {
     "@prisma/client": "^6.19.3",
