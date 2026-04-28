@@ -3,7 +3,6 @@
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { SITE_NAME } from "@/lib/constants";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -32,53 +31,53 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-8rem)] flex items-center justify-center px-4">
-      <div className="w-full max-w-sm">
-        <h1 className="text-2xl font-bold text-text-primary text-center mb-2">
-          {SITE_NAME}
-        </h1>
-        <p className="text-text-muted text-sm text-center mb-8">Admin Login</p>
+    <div className="lwt-modal-scrim" style={{ position: "static", minHeight: "calc(100vh - 200px)" }}>
+      <div className="lwt-modal">
+        <div className="lwt-modal-eyebrow">Restricted</div>
+        <h3 className="lwt-modal-title">Admin sign in</h3>
+        <p className="lwt-modal-sub">
+          Only Tone can post. Visitors can read, like, and comment without
+          signing in.
+        </p>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {error && (
-            <div className="px-3 py-2 bg-danger/10 border border-danger/30 rounded-md text-danger text-sm">
-              {error}
-            </div>
-          )}
-
-          <div>
-            <label className="block text-sm text-text-secondary mb-1">
-              Username
-            </label>
+        <form onSubmit={handleSubmit}>
+          <div className="lwt-field">
+            <div className="lwt-field-label">Username</div>
             <input
               type="text"
+              className="lwt-input"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2 bg-bg-tertiary border border-border rounded-md text-sm text-text-primary focus:outline-none focus:border-accent"
+              data-cursor-label="Type"
+              autoFocus
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm text-text-secondary mb-1">
-              Password
-            </label>
+          <div className="lwt-field">
+            <div className="lwt-field-label">Password</div>
             <input
               type="password"
+              className={`lwt-input${error ? " shake" : ""}`}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 bg-bg-tertiary border border-border rounded-md text-sm text-text-primary focus:outline-none focus:border-accent"
+              data-cursor-label="Type"
               required
             />
           </div>
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full py-2 bg-accent hover:bg-accent-hover text-white text-sm font-medium rounded-md transition-colors disabled:opacity-50"
-          >
-            {loading ? "Signing in..." : "Sign In"}
-          </button>
+          {error && <div className="lwt-modal-error">{error}</div>}
+
+          <div className="lwt-modal-foot">
+            <button
+              type="submit"
+              disabled={loading}
+              className="lwt-btn-primary"
+              data-cursor-label="Enter"
+            >
+              {loading ? "Signing in…" : "Sign in"}
+            </button>
+          </div>
         </form>
       </div>
     </div>

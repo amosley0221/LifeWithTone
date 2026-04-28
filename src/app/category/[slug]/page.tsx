@@ -9,15 +9,9 @@ export default async function CategoryPage({
   const cat = CATEGORIES.find((c) => c.slug === slug);
 
   return (
-    <div className="flex items-center justify-center h-full">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold text-text-primary mb-2">
-          {cat?.name || "Category"}
-        </h1>
-        <p className="text-text-muted text-sm">
-          Select a post from the sidebar to start reading.
-        </p>
-      </div>
+    <div className="lwt-empty-pane">
+      <h2>{cat?.name ?? "Section"}</h2>
+      <p>Pick a post from the rail to start reading.</p>
     </div>
   );
 }

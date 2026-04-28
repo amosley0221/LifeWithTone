@@ -5,6 +5,12 @@ import CommentSection from "@/components/CommentSection";
 
 export const dynamic = "force-dynamic";
 
+const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+function fmtDate(date: Date) {
+  return `${MONTHS[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+}
+
 export default async function PostPage({
   params,
 }: {
@@ -14,55 +20,43 @@ export default async function PostPage({
 
   const post = await prisma.post.findUnique({
     where: { id: postId, published: true },
-    include: { category: true },
+    include: {
+      category: true,
+      _count: { select: { comments: true, likes: true } },
+    },
   });
 
   if (!post) notFound();
 
-  const formatDate = (date: Date) => {
-    return date.toLocaleDateString("en-US", {
-      weekday: "long",
-      month: "long",
-      day: "numeric",
-      year: "numeric",
-    });
-  };
-
   return (
-    <article className="max-w-3xl mx-auto px-6 py-8">
-      {/* Header */}
-      <header className="mb-8">
-        <span className="text-xs text-accent font-medium uppercase tracking-wider">
-          {post.category.name}
-        </span>
-        <h1 className="text-3xl font-bold text-text-primary mt-2 mb-3">
-          {post.title}
-        </h1>
-        <p className="text-sm text-text-muted">{formatDate(post.createdAt)}</p>
+    <article className="lwt-pane">
+      <header className="lwt-post-header">
+        <div className="lwt-post-cat">{post.category.name}</div>
+        <h1 className="lwt-post-title">{post.title}</h1>
+        <div className="lwt-post-meta">
+          <span>By Tone</span>
+          <span className="lwt-post-meta-dot" />
+          <span>{fmtDate(post.createdAt)}</span>
+        </div>
       </header>
 
-      {/* Cover image */}
       {post.imageUrl && (
-        <div className="mb-8 rounded-lg overflow-hidden">
-          <img
-            src={post.imageUrl}
-            alt={post.title}
-            className="w-full object-cover max-h-96"
-          />
+        <div className="lwt-post-cover">
+          <img src={post.imageUrl} alt={post.title} />
         </div>
       )}
 
-      {/* Body */}
-      <div className="prose prose-invert prose-sm max-w-none text-text-secondary leading-relaxed whitespace-pre-wrap">
-        {post.body}
-      </div>
+      <div className="lwt-post-body">{post.body}</div>
 
-      {/* Like button */}
-      <div className="mt-8 pt-4 border-t border-border">
+      <div className="lwt-actions">
         <LikeButton postId={post.id} />
+        <div className="lwt-action-meta">
+          {post._count.comments}{" "}
+          {post._count.comments === 1 ? "comment" : "comments"}
+        </div>
+        <div className="lwt-action-spacer" />
       </div>
 
-      {/* Comments */}
       <CommentSection postId={post.id} />
     </article>
   );

@@ -43,9 +43,13 @@ export default async function CategoryLayout({
   }));
 
   return (
-    <div className="flex h-[calc(100vh-4rem)]">
-      <PostSidebar posts={sidebarPosts} categorySlug={slug} />
-      <div className="flex-1 overflow-y-auto">{children}</div>
+    <div className="lwt-reader">
+      <PostSidebar
+        posts={sidebarPosts}
+        categorySlug={slug}
+        categoryName={category.name}
+      />
+      {children}
     </div>
   );
 }

@@ -9,60 +9,54 @@ interface SidebarPost {
   createdAt: string;
 }
 
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+function fmtDate(iso: string) {
+  const d = new Date(iso);
+  return `${MONTHS[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+}
+
 export default function PostSidebar({
   posts,
   categorySlug,
+  categoryName,
 }: {
   posts: SidebarPost[];
   categorySlug: string;
+  categoryName: string;
 }) {
   const params = useParams();
   const activePostId = params?.postId as string | undefined;
 
-  const formatDate = (dateStr: string) => {
-    return new Date(dateStr).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  };
-
   return (
-    <aside className="w-72 shrink-0 border-r border-border bg-bg-secondary h-[calc(100vh-4rem)] overflow-y-auto">
-      <div className="p-4">
-        <h2 className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-4">
-          Posts
-        </h2>
+    <aside className="lwt-rail">
+      <div className="lwt-rail-head">
+        <div className="lwt-rail-eyebrow">Section</div>
+        <h2 className="lwt-rail-title">{categoryName}</h2>
+        <div className="lwt-rail-count">
+          {posts.length} {posts.length === 1 ? "post" : "posts"}
+        </div>
+      </div>
+      <div className="lwt-rail-list">
         {posts.length === 0 ? (
-          <p className="text-sm text-text-muted">No posts yet.</p>
+          <div className="lwt-rail-empty">Nothing here yet.</div>
         ) : (
-          <div className="space-y-1">
-            {posts.map((post) => {
-              const isActive = activePostId === post.id;
-              return (
-                <Link
-                  key={post.id}
-                  href={`/category/${categorySlug}/${post.id}`}
-                  className={`block px-3 py-3 rounded-md transition-colors ${
-                    isActive
-                      ? "bg-accent/15 border-l-2 border-accent"
-                      : "hover:bg-bg-tertiary"
-                  }`}
-                >
-                  <p
-                    className={`text-sm font-medium truncate ${
-                      isActive ? "text-accent" : "text-text-primary"
-                    }`}
-                  >
-                    {post.title}
-                  </p>
-                  <p className="text-xs text-text-muted mt-1">
-                    {formatDate(post.createdAt)}
-                  </p>
-                </Link>
-              );
-            })}
-          </div>
+          posts.map((p) => {
+            const active = activePostId === p.id;
+            return (
+              <Link
+                key={p.id}
+                href={`/category/${categorySlug}/${p.id}`}
+                className={`lwt-rail-item${active ? " active" : ""}`}
+                data-cursor-label="Read"
+              >
+                <h3 className="lwt-rail-item-title">{p.title}</h3>
+                <div className="lwt-rail-item-meta">
+                  <span>{fmtDate(p.createdAt)}</span>
+                </div>
+              </Link>
+            );
+          })
         )}
       </div>
     </aside>
