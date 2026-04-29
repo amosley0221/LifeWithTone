@@ -817,8 +817,8 @@ button { font: inherit; color: inherit; background: transparent; border: 0; padd
   .lwt-home-eyebrow { margin-bottom: 16px; font-size: 10px; letter-spacing: .26em; }
   .lwt-home-title { font-size: clamp(44px, 14vw, 72px); margin-bottom: 16px; }
   .lwt-home-tagline { font-size: 17px; margin-bottom: 24px; }
-  .lwt-home-meta { gap: 14px; margin-top: 4px; }
-  .lwt-home-meta-rule { flex: 0 0 28px; }
+  .lwt-home-meta { gap: 16px; margin-top: 4px; }
+  .lwt-home-meta-rule { flex: 0 0 56px; }
 
   .lwt-footer {
     padding: 14px 18px;
