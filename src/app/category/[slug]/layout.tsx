@@ -46,8 +46,8 @@ export default async function CategoryLayout({
     <div className="lwt-reader">
       <PostSidebar
         posts={sidebarPosts}
-        categorySlug={slug}
-        categoryName={category.name}
+        basePath={`/category/${slug}`}
+        sectionLabel={category.name}
       />
       {children}
     </div>

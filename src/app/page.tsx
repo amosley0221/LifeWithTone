@@ -22,7 +22,7 @@ export default async function HomePage() {
       <div className="lwt-home-meta">
         <span className="lwt-home-meta-rule" />
         <Link
-          href="/category/technology"
+          href="/all"
           className="lwt-home-cta"
           data-cursor-label="Browse"
         >

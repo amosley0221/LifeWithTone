@@ -18,12 +18,12 @@ function fmtDate(iso: string) {
 
 export default function PostSidebar({
   posts,
-  categorySlug,
-  categoryName,
+  basePath,
+  sectionLabel,
 }: {
   posts: SidebarPost[];
-  categorySlug: string;
-  categoryName: string;
+  basePath: string;
+  sectionLabel: string;
 }) {
   const params = useParams();
   const activePostId = params?.postId as string | undefined;
@@ -32,7 +32,7 @@ export default function PostSidebar({
     <aside className="lwt-rail">
       <div className="lwt-rail-head">
         <div className="lwt-rail-eyebrow">Section</div>
-        <h2 className="lwt-rail-title">{categoryName}</h2>
+        <h2 className="lwt-rail-title">{sectionLabel}</h2>
         <div className="lwt-rail-count">
           {posts.length} {posts.length === 1 ? "post" : "posts"}
         </div>
@@ -46,7 +46,7 @@ export default function PostSidebar({
             return (
               <Link
                 key={p.id}
-                href={`/category/${categorySlug}/${p.id}`}
+                href={`${basePath}/${p.id}`}
                 className={`lwt-rail-item${active ? " active" : ""}`}
                 data-cursor-label="Read"
               >

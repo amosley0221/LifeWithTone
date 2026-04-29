@@ -23,6 +23,7 @@ export default function Navbar() {
   };
 
   const isHome = pathname === "/";
+  const isAll = pathname === "/all" || pathname.startsWith("/all/");
   const activeSlug = pathname.startsWith("/category/")
     ? pathname.split("/")[2]
     : null;
@@ -80,6 +81,19 @@ export default function Navbar() {
                 </Link>
               </li>
             ))}
+            <li style={{ ["--i" as never]: CATEGORIES.length + 1 }}>
+              <Link
+                href="/all"
+                className={`lwt-menu-link${isAll ? " active" : ""}`}
+                data-cursor-label="All"
+                onClick={() => setOpen(false)}
+              >
+                <span>All Writing</span>
+                <span className="lwt-menu-link-hint">
+                  Everything, newest first
+                </span>
+              </Link>
+            </li>
           </ul>
         </div>
       </div>
