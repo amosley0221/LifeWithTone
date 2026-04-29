@@ -115,7 +115,12 @@ button { font: inherit; color: inherit; background: transparent; border: 0; padd
 @keyframes lwt-fade-in { to { opacity: 1; } }
 
 /* ── App shell ─────────────────────────────────────────────────────────── */
-.lwt-app { min-height: 100vh; display: flex; flex-direction: column; }
+.lwt-app {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
 
 /* Top bar */
 .lwt-topbar {
@@ -348,6 +353,7 @@ button { font: inherit; color: inherit; background: transparent; border: 0; padd
   text-transform: uppercase;
   font-size: 11px;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 /* ── Reading view ──────────────────────────────────────────────────────── */
@@ -799,5 +805,31 @@ button { font: inherit; color: inherit; background: transparent; border: 0; padd
   .lwt-pane { padding: 40px 24px 60px; }
   .lwt-topbar { padding: 16px 20px; }
   .lwt-comment-form { grid-template-columns: 1fr; }
-  .lwt-footer { padding: 28px 20px; flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 600px) {
+  .lwt-topbar { padding: 12px 18px; }
+  .lwt-brand { font-size: 19px; }
+  .lwt-menu-btn { width: 38px; height: 38px; }
+  .lwt-menu-panel { min-width: min(320px, calc(100vw - 32px)); }
+
+  .lwt-home { padding: 24px 22px; justify-content: center; gap: 0; }
+  .lwt-home-eyebrow { margin-bottom: 16px; font-size: 10px; letter-spacing: .26em; }
+  .lwt-home-title { font-size: clamp(44px, 14vw, 72px); margin-bottom: 16px; }
+  .lwt-home-tagline { font-size: 17px; margin-bottom: 24px; }
+  .lwt-home-meta { gap: 14px; margin-top: 4px; }
+  .lwt-home-meta-rule { flex: 0 0 28px; }
+
+  .lwt-footer {
+    padding: 14px 18px;
+    gap: 12px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .lwt-footer-meta { font-size: 10px; }
+  .lwt-footer-meta b { font-size: 13px; }
+  .lwt-social { width: 32px; height: 32px; }
+  .lwt-social svg { width: 14px; height: 14px; }
+  .lwt-socials { gap: 4px; }
 }
