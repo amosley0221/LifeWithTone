@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -8,6 +8,15 @@ export const metadata: Metadata = {
   title: "LifeWithTone",
   description:
     "Notes from the road, the garage, the record shelf, and the quiet hours in between.",
+  appleWebApp: {
+    title: "LwT",
+    capable: true,
+    statusBarStyle: "default",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#1f3a2a",
 };
 
 export default function RootLayout({
